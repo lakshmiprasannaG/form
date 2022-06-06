@@ -1,6 +1,14 @@
 const fs = require('fs');
 const { stdin } = require('process');
 
+const nameContainNumber = name => {
+  return /[1-9]/.test(name);
+};
+
+const isNameInvalid = name => {
+  return name.length < 5 || nameContainNumber(name);
+};
+
 const userName = userInfo => {
   process.stdin.setEncoding('utf8');
 
@@ -8,7 +16,14 @@ const userName = userInfo => {
   process.stdin.on('data', name => {
     userInfo.name = name.trim();
     stdin.removeAllListeners('data');
-    userDob(userInfo);
+
+    if (isNameInvalid(name)) {
+      console.log('Invalid name');
+      userName(userInfo);
+    }
+    else {
+      userDob(userInfo);
+    }
   })
 };
 
