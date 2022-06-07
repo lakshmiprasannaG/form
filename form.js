@@ -1,57 +1,31 @@
-const fs = require('fs');
-const { stdin } = require('process');
+class Form {
+  constructor(fields, records) {
+    this.fields = fields;
+    this.records = records;
+  }
 
-const nameContainNumber = name => {
-  return /[1-9]/.test(name);
-};
+  recordResponse(response, index) {
+    const currentField = this.fields[index].name;
 
-const isNameInvalid = name => {
-  return name.length < 5 || nameContainNumber(name);
-};
-
-const userName = userInfo => {
-  process.stdin.setEncoding('utf8');
-
-  console.log('Please enter your name:');
-  process.stdin.on('data', name => {
-    userInfo.name = name.trim();
-    stdin.removeAllListeners('data');
-
-    if (isNameInvalid(name)) {
-      console.log('Invalid name');
-      userName(userInfo);
+    if (currentField === 'hobbies') {
+      this.records[currentField] = response.trim().split(',');
     }
     else {
-      userDob(userInfo);
+      this.records[currentField] = response.trim();
     }
-  })
-};
+  }
 
-const userDob = userInfo => {
-  process.stdin.setEncoding('utf8');
+  getRecords() {
+    return this.records;
+  }
 
-  console.log('Please enter your dob(yyyy-mm-dd):');
-  process.stdin.on('data', dob => {
-    userInfo.dob = dob.trim();
-    stdin.removeAllListeners('data');
-    userHobbies(userInfo);
-  })
-};
+  getQuestion(index) {
+    return this.fields[index].question;
+  }
 
-const userHobbies = userInfo => {
-  process.stdin.setEncoding('utf8');
+  areQuestionsDone(index) {
+    return this.fields.length === index;
+  }
+}
 
-  console.log('Please enter your hobbies:');
-  process.stdin.on('data', hobbies => {
-    userInfo.hobbies = hobbies.trim().split(',');
-    fs.writeFileSync('form.json', JSON.stringify(userInfo), 'utf8');
-    stdin.removeAllListeners('data');
-  })
-};
-
-const main = () => {
-  const userInfo = {};
-  userName(userInfo);
-};
-
-main();
+exports.Form = Form;
