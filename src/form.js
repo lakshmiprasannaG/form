@@ -10,8 +10,9 @@ class Form {
 
   fillField(response) {
     const currentField = this.#getCurrentField();
-    currentField.fill(response);
-    this.currentIndex++;
+    if (currentField.fill(response)) {
+      this.currentIndex++;
+    }
   }
 
   getFilledForm() {

@@ -11,4 +11,10 @@ describe('field', () => {
 
     assert.deepStrictEqual(field.getEntry(), expected);
   });
+
+  it('should give the prompt', () => {
+    const field = new Field('name', 'enter name', x => x);
+
+    assert.strictEqual(field.getPrompt(), 'enter name');
+  });
 });
