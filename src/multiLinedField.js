@@ -14,7 +14,8 @@ class MultiLinedField {
   }
 
   getPrompt() {
-    return this.#prompts[this.#responses.length];
+    const index = this.#responses.length;
+    return this.#prompts[index];
   }
 
   fill(response) {

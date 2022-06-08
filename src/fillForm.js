@@ -1,11 +1,11 @@
 const fs = require('fs');
-const { createForm, registerResponse } = require('./formLib.js');
+const { registerResponse } = require('./formLib.js');
+const { createForm } = require('./userDetailsForm.js');
 
 const writeFile = records => {
   fs.writeFileSync('./form.json', JSON.stringify(records), 'utf8');
   process.stdin.destroy();
 };
-
 
 const main = () => {
   const form = createForm();
@@ -18,5 +18,3 @@ const main = () => {
 };
 
 main();
-
-module.exports = { registerResponse };
