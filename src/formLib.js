@@ -1,5 +1,6 @@
 const { Form } = require('./form.js');
 const { Field } = require('./field.js');
+const { MultiLinedField } = require('./multiLinedField.js');
 
 const registerResponse = (form, response, logger, cb) => {
   form.fillField(response.trim());
@@ -15,6 +16,7 @@ const registerResponse = (form, response, logger, cb) => {
 
 const identity = text => text;
 const splitByComma = text => text.split(',');
+const joinByNewLine = list => list.join('\n');
 
 const longerThanFour = text => text.length > 4;
 const onlyAlphabets = text => /^[a-zA-Z]*$/.test(text);
@@ -36,8 +38,14 @@ const createForm = () => {
     splitByComma,
     isNonEmpty
   );
+  const addressField = new MultiLinedField(
+    'address',
+    ['enter address line 1', 'enter address line 2'],
+    joinByNewLine,
+    isNonEmpty
+  );
 
-  const fields = [nameField, dobField, hobbiesField];
+  const fields = [nameField, dobField, hobbiesField, addressField];
 
   return new Form(fields);
 };

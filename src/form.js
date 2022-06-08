@@ -10,9 +10,13 @@ class Form {
 
   fillField(response) {
     const currentField = this.#getCurrentField();
-    if (currentField.fill(response)) {
+    if (currentField.fill(response) && currentField.isFilled()) {
       this.currentIndex++;
     }
+  }
+
+  isResponseValid(response) {
+    return this.#getCurrentField().isValid(response);
   }
 
   getFilledForm() {
@@ -30,7 +34,7 @@ class Form {
   }
 
   isFilled() {
-    return this.fields.length === this.currentIndex;
+    return this.fields.every(field => field.isFilled());
   }
 }
 

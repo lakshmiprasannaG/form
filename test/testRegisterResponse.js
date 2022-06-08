@@ -1,6 +1,6 @@
 const { Form } = require('../src/form.js');
 const { Field } = require('../src/field.js');
-const { registerResponse } = require('./../src/fillForm.js');
+const { registerResponse } = require('./../src/formLib.js');
 
 const assert = require('assert');
 
