@@ -25,7 +25,7 @@ class Form {
   }
 
   getPrompt() {
-    return this.fields[this.currentIndex].getPrompt();
+    return this.#getCurrentField().getPrompt();
   }
 
   isFilled() {

@@ -2,13 +2,8 @@ const fs = require('fs');
 const { Form } = require('./form.js');
 const { Field } = require('./field.js');
 
-const identity = text => text;
-
-const splitByComma = text => text.split(',');
-
 const writeFile = records => {
   fs.writeFileSync('./form.json', JSON.stringify(records), 'utf8');
-
   process.stdin.destroy();
 };
 
@@ -24,15 +19,21 @@ const registerResponse = (form, response, logger, cb) => {
   logger(form.getPrompt());
 };
 
-const main = () => {
+const identity = text => text;
+const splitByComma = text => text.split(',');
 
+const createForm = () => {
   const nameField = new Field('name', 'enter your name', identity);
   const dobField = new Field('dob', 'enter your dob', identity);
   const hobbiesField = new Field('hobbies', 'enter your hobbies', splitByComma);
 
   const fields = [nameField, dobField, hobbiesField];
 
-  const form = new Form(fields, {});
+  return new Form(fields);
+}
+
+const main = () => {
+  const form = createForm();
   console.log(form.getPrompt());
 
   process.stdin.setEncoding('utf8');
